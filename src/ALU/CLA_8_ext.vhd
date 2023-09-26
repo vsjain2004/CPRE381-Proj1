@@ -32,46 +32,46 @@ architecture dataflow of CLA_8_ext is
 begin
     Carry(0) <= Cin;
 
-    g0 <= X(0) & Y(0);
-    p0 <= X(0) | Y(0);
-    S(0) <= X(0) ^ Y(0) ^ Carry(0);
-    Carry(1) <= g0 | (p0 & Cin);
+    g0 <= X(0) and Y(0);
+    p0 <= X(0) or Y(0);
+    S(0) <= X(0) xor Y(0) xor Carry(0);
+    Carry(1) <= g0 or (p0 and Cin);
 
-    g1 <= X(1) & Y(1);
-    p1 <= X(1) | Y(1);
-    S(1) <= X(1) ^ Y(1) ^ Carry(1);
-    Carry(2) <= g1 | (p1 & g0) | (p1 & p0 & Cin);
+    g1 <= X(1) and Y(1);
+    p1 <= X(1) or Y(1);
+    S(1) <= X(1) xor Y(1) xor Carry(1);
+    Carry(2) <= g1 or (p1 and g0) or (p1 and p0 and Cin);
     
-    g2 <= X(2) & Y(2);
-    p2 <= X(2) | Y(2);
-    S(2) <= X(2) ^ Y(2) ^ Carry(2);
-    Carry(3) <= g2 | (p2 & g1) | (p2 & p1 & g0) | (p2 & p1 & p0 & Cin);
+    g2 <= X(2) and Y(2);
+    p2 <= X(2) or Y(2);
+    S(2) <= X(2) xor Y(2) xor Carry(2);
+    Carry(3) <= g2 or (p2 and g1) or (p2 and p1 and g0) or (p2 and p1 and p0 and Cin);
     
-    g3 <= X(3) & Y(3);
-    p3 <= X(3) | Y(3);
-    S(3) <= X(3) ^ Y(3) ^ Carry(3);
-    Carry(4) <= g3 | (p3 & g2) | (p3 & p2 & g1) | (p3 & p2 & p1 & g0) | (p3 & p2 & p1 & p0 & Cin);
+    g3 <= X(3) and Y(3);
+    p3 <= X(3) or Y(3);
+    S(3) <= X(3) xor Y(3) xor Carry(3);
+    Carry(4) <= g3 or (p3 and g2) or (p3 and p2 and g1) or (p3 and p2 and p1 and g0) or (p3 and p2 and p1 and p0 and Cin);
     
-    g4 <= X(4) & Y(4);
-    p4 <= X(4) | Y(4);
-    S(4) <= X(4) ^ Y(4) ^ Carry(4);
-    Carry(5) <= g4 | (p4 & g3) | (p4 & p3 & g2) | (p4 & p3 & p2 & g1) | (p4 & p3 & p2 & p1 & g0) | (p4 & p3 & p2 & p1 & p0 & Cin);
+    g4 <= X(4) and Y(4);
+    p4 <= X(4) or Y(4);
+    S(4) <= X(4) xor Y(4) xor Carry(4);
+    Carry(5) <= g4 or (p4 and g3) or (p4 and p3 and g2) or (p4 and p3 and p2 and g1) or (p4 and p3 and p2 and p1 and g0) or (p4 and p3 and p2 and p1 and p0 and Cin);
     
-    g5 <= X(5) & Y(5);
-    p5 <= X(5) | Y(5);
-    S(5) <= X(5) ^ Y(5) ^ Carry(5);
-    Carry(6) <= g5 | (p5 & g4) | (p5 & p4 & g3) | (p5 & p4 & p3 & g2) | (p5 & p4 & p3 & p2 & g1) | (p5 & p4 & p3 & p2 & p1 & g0) | (p5 & p4 & p3 & p2 & p1 & p0 & Cin);
+    g5 <= X(5) and Y(5);
+    p5 <= X(5) or Y(5);
+    S(5) <= X(5) xor Y(5) xor Carry(5);
+    Carry(6) <= g5 or (p5 and g4) or (p5 and p4 and g3) or (p5 and p4 and p3 and g2) or (p5 and p4 and p3 and p2 and g1) or (p5 and p4 and p3 and p2 and p1 and g0) or (p5 and p4 and p3 and p2 and p1 and p0 and Cin);
     
-    g6 <= X(6) & Y(6);
-    p6 <= X(6) | Y(6);
-    S(6) <= X(6) ^ Y(6) ^ Carry(6);
-    Carry(7) <= g6 | (p6 & g5) | (p6 & p5 & g4) | (p6 & p5 & p4 & g3) | (p6 & p5 & p4 & p3 & g2) | (p6 & p5 & p4 & p3 & p2 & g1) | (p6 & p5 & p4 & p3 & p2 & p1 & g0) | (p6 & p5 & p4 & p3 & p2 & p1 & p0 & Cin);
+    g6 <= X(6) and Y(6);
+    p6 <= X(6) or Y(6);
+    S(6) <= X(6) xor Y(6) xor Carry(6);
+    Carry(7) <= g6 or (p6 and g5) or (p6 and p5 and g4) or (p6 and p5 and p4 and g3) or (p6 and p5 and p4 and p3 and g2) or (p6 and p5 and p4 and p3 and p2 and g1) or (p6 and p5 and p4 and p3 and p2 and p1 and g0) or (p6 and p5 and p4 and p3 and p2 and p1 and p0 and Cin);
     
-    g7 <= X(7) & Y(7);
-    p7 <= X(7) | Y(7);
-    S(7) <= X(7) ^ Y(7) ^ Carry(7);
+    g7 <= X(7) and Y(7);
+    p7 <= X(7) or Y(7);
+    S(7) <= X(7) xor Y(7) xor Carry(7);
 
-    P <= p7 & p6 & p5 & p4 & p3 & p2 & p1 & p0;
-    G <= g7 | (p7 & g6) | (p7 & p6 & g5) | (p7 & p6 & p5 & g4) | (p7 & p6 & p5 & p4 & g3) | (p7 & p6 & p5 & p4 & p3 & g2) | (p7 & p6 & p5 & p4 & p3 & p2 & g1) | (p7 & p6 & p5 & p4 & p3 & p2 & p1 & g0);
+    P <= p7 and p6 and p5 and p4 and p3 and p2 and p1 and p0;
+    G <= g7 or (p7 and g6) or (p7 and p6 and g5) or (p7 and p6 and p5 and g4) or (p7 and p6 and p5 and p4 and g3) or (p7 and p6 and p5 and p4 and p3 and g2) or (p7 and p6 and p5 and p4 and p3 and p2 and g1) or (p7 and p6 and p5 and p4 and p3 and p2 and p1 and g0);
     C <= Carry(7);
 end
