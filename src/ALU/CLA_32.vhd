@@ -86,7 +86,7 @@ begin
     
     c32 <= g32 or (p32 and g24) or (p32 and p24 and g16) or (p32 and p24 and p16 and g8) or (p32 and p24 and p16 and p8 and AddSub);
 
-    zero = S(31) or S(30) or S(29) or S(28) or S(27) or S(26) or S(25) or S(24) or S(23) or S(22) or S(21) or S(20) or S(19) or S(18) or S(17) or S(16) or S(15) or S(14) or S(13) or S(12) or S(11) or S(10) or S(9) or S(8) or S(7) or S(6) or S(5) or S(4) or S(3) or S(2) or S(1) or S(0);
+    zero = not(S(31) or S(30) or S(29) or S(28) or S(27) or S(26) or S(25) or S(24) or S(23) or S(22) or S(21) or S(20) or S(19) or S(18) or S(17) or S(16) or S(15) or S(14) or S(13) or S(12) or S(11) or S(10) or S(9) or S(8) or S(7) or S(6) or S(5) or S(4) or S(3) or S(2) or S(1) or S(0));
     negative = S(31);
     overflow = c31 xor c32;
 
