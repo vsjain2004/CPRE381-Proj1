@@ -100,7 +100,7 @@ begin
             output => sh_out);
     
     lui32 : LUI
-    port MAP(input => X,
+    port MAP(input => Y,
             output => not_out);
     
     nor3_2 : Nor_32
