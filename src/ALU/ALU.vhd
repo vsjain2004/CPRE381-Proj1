@@ -37,7 +37,7 @@ architecture structural of ALU is
             output : out std_logic_vector(31 downto 0));
     end component;
 
-    component Not_32
+    component LUI
         port(input : in std_logic_vector(31 downto 0);
             output : out std_logic_vector(31 downto 0));
     end component;
@@ -74,7 +74,7 @@ architecture structural of ALU is
     signal add_out : std_logic_vector(31 downto 0);
     signal n : std_logic;
     signal sh_out : std_logic_vector(31 downto 0);
-    signal not_out : std_logic_vector(31 downto 0);
+    signal lui_out : std_logic_vector(31 downto 0);
     signal nor_out : std_logic_vector(31 downto 0);
     signal or_out : std_logic_vector(31 downto 0);
     signal xor_out : std_logic_vector(31 downto 0);
@@ -99,7 +99,7 @@ begin
             shtype => shtype,
             output => sh_out);
     
-    inv32 : Not_32
+    lui32 : LUI
     port MAP(input => X,
             output => not_out);
     
@@ -130,7 +130,7 @@ begin
     with {alu_sel_2 & alu_sel_1 & alu_sel_0} select
         result <= add_out when "000",
                   sh_out when "001",
-                  not_out when "010",
+                  lui_out when "010",
                   nor_out when "011",
                   or_out when "100",
                   xor_out when "101",
