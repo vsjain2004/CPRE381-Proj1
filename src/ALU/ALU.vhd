@@ -4,10 +4,9 @@ use IEEE.std_logic_1164.all;
 entity ALU is
     port(X : in std_logic_vector(31 downto 0);
         Y : in std_logic_vector(31 downto 0);
-        AddSub : in std_logic;
+        astype : in std_logic;
         shamt : in std_logic_vector(4 downto 0);
         shdir : in std_logic;
-        shtype : in std_logic;
         alu_sel_0 : in std_logic;
         alu_sel_1 : in std_logic;
         alu_sel_2 : in std_logic;
@@ -84,7 +83,7 @@ begin
     cla : CLA_32
     port MAP(X => X,
             Y => Y,
-            AddSub => AddSub,
+            AddSub => astype,
             S => add_out,
             zero => zero,
             negative => n,
@@ -96,7 +95,7 @@ begin
     port MAP(data => X,
             shamt => shamt,
             shdir => shdir,
-            shtype => shtype,
+            shtype => astype,
             output => sh_out);
     
     lui32 : LUI
