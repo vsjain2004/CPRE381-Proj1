@@ -72,6 +72,7 @@ architecture structural of ALU is
 
     signal add_out : std_logic_vector(31 downto 0);
     signal n : std_logic;
+    signal o : std_logic;
     signal sh_out : std_logic_vector(31 downto 0);
     signal lui_out : std_logic_vector(31 downto 0);
     signal nor_out : std_logic_vector(31 downto 0);
@@ -79,6 +80,7 @@ architecture structural of ALU is
     signal xor_out : std_logic_vector(31 downto 0);
     signal and_out : std_logic_vector(31 downto 0);
     signal neg_out : std_logic_vector(31 downto 0);
+    signal less : std_logic;
 begin
     cla : CLA_32
     port MAP(X => X,
@@ -87,9 +89,11 @@ begin
             S => add_out,
             zero => zero,
             negative => n,
-            overflow => overflow);
+            overflow => o);
     
     negative <= n;
+    overflow <= o;
+    less <= n xor o;
 
     shift : Shifter
     port MAP(data => X,
@@ -123,7 +127,7 @@ begin
             output => and_out);
     
     negex : Neg_ext
-    port MAP(neg => n,
+    port MAP(neg => less,
             negext => neg_out);
     
     with {alu_sel_2 & alu_sel_1 & alu_sel_0} select
