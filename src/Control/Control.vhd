@@ -14,6 +14,7 @@ entity Control is
         bgtz : out std_logic;
         imm_ext : out std_logic;
         sel_y : out std_logic;
+        ivu_sel : out std_logic;
         astype : out std_logic;
         shdir : out std_logic;
         alu_sel_2 : out std_logic;
@@ -39,19 +40,31 @@ architecture structural of Control is
     signal op_dec : std_logic_vector(63 downto 0);
     signal func_dec : std_logic_vector(63 downto 0);
 begin
-    o_rd <= "11111" when ()
+    with ((op_dec(0) and func_dec(9)) or op_dec(3)) select
+        o_rd <= i_rd when '0',
+                "11111" when '1',
+                "00000" when others;
     movz <= op_dec(0) and func_dec(10);
     movn <= op_dec(0) and func_dec(11);
     beq <= op_dec(4);
     bne <= op_dec(5);
     blez <= op_dec(6);
     bgtz <= op_dec(7);
-    imm_ext <= op_dec(4) or op_dec(5) or op_dec(6) or op_dec(7) or op_dec(8) or op_dec(9) or op_dec(10);
-    sel_y <= op_dec(8) or op_dec(9) or op_dec(10) or op_dec(12) or op_dec(13) or op_dec(14) or op_dec(15) or op_dec(35) or op_dec(43);
-    astype <= (op_dec(0) and (func_dec(3) or func_dec(34) or func_dec(35) or func_dec(42))) or op_dec(4) or op_dec(5) or op_dec(6) or op_dec(7) or op_dec(10);
-    shdir <= op_dec(0) and func_dec(2);
-    alu_sel_2 <= (op_dec(0) and (func_dec(36) or func_dec(37) or func_dec(38) or func_dec(42))) or op_dec(10) or op_dec(12) or op_dec(13) or op_dec(14);
-    alu_sel_1 <= (op_dec(0) and (func_dec(36) or func_dec(39) or func_dec(42))) or op_dec(10) or op_dec(12) or op_dec(15);
-    alu_sel_0 <= (op_dec(0) and (func_dec(2) or func_dec(3) or func_dec(38) or func_dec(39) or func_dec(42))) or op_dec(10) or op_dec(14);
+    imm_ext <= op_dec(4) or op_dec(5) or op_dec(6) or op_dec(7) or op_dec(8) or op_dec(9) or op_dec(10)or op_dec(11);
+    sel_y <= op_dec(8) or op_dec(9) or op_dec(10) or op_dec(11) or op_dec(12) or op_dec(13) or op_dec(14) or op_dec(15) or op_dec(35) or op_dec(43);
+    ivu_sel <= (op_dec(0) and (func_dec(0) or func_dec(4) or func_dec(6) or func_dec(7) or func_dec(43)))or op_dec(11);
+    astype <= (op_dec(0) and (func_dec(3) or func_dec(7) or func_dec(34) or func_dec(35) or func_dec(42) or func_dec(43))) or op_dec(4) or op_dec(5) or op_dec(6) or op_dec(7) or op_dec(10) or op_dec(11);
+    shdir <= op_dec(0) and (func_dec(2) or func_dec(6));
+    alu_sel_2 <= (op_dec(0) and (func_dec(36) or func_dec(37) or func_dec(38) or func_dec(42) or func_dec(43))) or op_dec(10) or op_dec(11) or op_dec(12) or op_dec(13) or op_dec(14);
+    alu_sel_1 <= (op_dec(0) and (func_dec(36) or func_dec(39) or func_dec(42) or func_dec(43))) or op_dec(10) or op_dec(11) or op_dec(12) or op_dec(15);
+    alu_sel_0 <= (op_dec(0) and (func_dec(0) or func_dec(2) or func_dec(3) or func_dec(4) or func_dec(6) or func_dec(7) or func_dec(38) or func_dec(39) or func_dec(42) or op_dec(43))) or op_dec(10) or op_dec(11) or op_dec(14);
     dmem_we <= op_dec(43);
+    reg_we <= not ((op_dec(0) and (func_dec(8) or func_dec(9) or func_dec(13))) or op_dec(2) or op_dec(4) or op_dec(5) or op_dec(6) or op_dec(7) or op_dec(20) or op_dec(43));
+    ra_we <= (op_dec(0) and func_dec(9)) or op_dec(3);
+    reg_sel <= op_dec(35);
+    rd_sel <= op_dec(8) or op_dec(9) or op_dec(10) or op_dec(11) or op_dec(12) or op_dec(13) or op_dec(14) or op_dec(15) or op_dec(35);
+    pc_sel_1 <= op_dec(2) or op_dec(3);
+    pc_sel_0 <= op_dec(0) and (func_dec(8) or func_dec(9));
+    det_o <= (op_dec(0) and (func_dec(32) or func_dec(34))) or op_dec(8);
+    halt <= (op_dec(0) and func_dec(13)) or op_dec(20);
 end structural;

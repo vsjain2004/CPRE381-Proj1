@@ -7,6 +7,7 @@ entity ALU is
         astype : in std_logic;
         shamt : in std_logic_vector(4 downto 0);
         shdir : in std_logic;
+        ivu_sel : in std_logic;
         alu_sel_0 : in std_logic;
         alu_sel_1 : in std_logic;
         alu_sel_2 : in std_logic;
@@ -25,7 +26,8 @@ architecture structural of ALU is
             S : out std_logic_vector(31 downto 0);
             zero : out std_logic;
             negative : out std_logic;
-            overflow : out std_logic);
+            overflow : out std_logic;
+            carry : out std_logic);
     end component;
 
     component Shifter
@@ -73,6 +75,7 @@ architecture structural of ALU is
     signal add_out : std_logic_vector(31 downto 0);
     signal n : std_logic;
     signal o : std_logic;
+    signal c : std_logic;
     signal sh_out : std_logic_vector(31 downto 0);
     signal lui_out : std_logic_vector(31 downto 0);
     signal nor_out : std_logic_vector(31 downto 0);
@@ -89,11 +92,15 @@ begin
             S => add_out,
             zero => zero,
             negative => n,
-            overflow => o);
+            overflow => o,
+            carry => c);
     
     negative <= n;
     overflow <= o;
-    less <= n xor o;
+    with ivu_sel select
+        less <= (not c) when '0',
+                (n xor o) when '1',
+                '0' when others;
 
     shift : Shifter
     port MAP(data => X,
