@@ -24,6 +24,9 @@ package MIPS_types is
     reg_to_mem : std_logic;
   end record control_t;
 
+  --For RegFile
+  type reg_data_array is array (0 to 31) of std_logic_vector(31 downto 0);
+
 end package MIPS_types;
 
 package body MIPS_types is
