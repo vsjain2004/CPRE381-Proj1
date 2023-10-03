@@ -74,4 +74,4 @@ begin
     P <= p7 and p6 and p5 and p4 and p3 and p2 and p1 and p0;
     G <= g7 or (p7 and g6) or (p7 and p6 and g5) or (p7 and p6 and p5 and g4) or (p7 and p6 and p5 and p4 and g3) or (p7 and p6 and p5 and p4 and p3 and g2) or (p7 and p6 and p5 and p4 and p3 and p2 and g1) or (p7 and p6 and p5 and p4 and p3 and p2 and p1 and g0);
     C <= Carry(7);
-end
+end dataflow;

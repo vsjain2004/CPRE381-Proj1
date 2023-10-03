@@ -3,7 +3,7 @@ use IEEE.std_logic_1164.all;
 
 entity PC is
     port(linkr : in std_logic_vector(31 downto 0);
-        JAddr : in std_logic_vector(31 downto 0);
+        JAddr : in std_logic_vector(25 downto 0);
         BAddr : in std_logic_vector(31 downto 0);
         pc_sel_1 : in std_logic;
         pc_sel_0 : in std_logic;
@@ -34,18 +34,22 @@ architecture structural of PC is
             negative : out std_logic;
             overflow : out std_logic;
             carry : out std_logic);
-    end CLA_32;
+    end component;
 
     signal pc_o : std_logic_vector(31 downto 0);
     signal pc4_o : std_logic_vector(31 downto 0);
     signal jumpaddr : std_logic_vector(31 downto 0);
     signal braddr : std_logic_vector(31 downto 0);
-    signal pc_in : std_logic_vector(31 downto 0) := x"00000000";
+    signal pc_in : std_logic_vector(31 downto 0);
+    signal we : std_logic;
+    signal X_2 : std_logic_vector(31 downto 0);
+    signal pc_sel : std_logic_vector(1 downto 0);
 begin
+    we <= not halt;
     progc : RegNBit
         port MAP(clk => clk,
                 reset => reset,
-                we => (not halt),
+                we => we,
                 data => pc_in,
                 o_data => pc_o);
     
@@ -64,8 +68,9 @@ begin
     o_PC4 <= pc4_o;
     jumpaddr <= pc4_o(31 downto 28) & JAddr & "00";
 
+    X_2 <= BAddr(29 downto 0) & "00";
     Add2 : CLA_32
-    port MAP(X => (BAddr(29 downto 0) & "00"),
+    port MAP(X => X_2,
             Y => pc4_o,
             AddSub => '0',
             S => braddr,
@@ -74,10 +79,12 @@ begin
             overflow => open,
             carry => open);
 
-    with {pc_sel_1 & pc_sel_0} select
+    pc_sel <= pc_sel_1 & pc_sel_0;
+    with pc_sel select
         pc_in <= pc4_o when "00",
                  linkr when "01",
                  jumpaddr when "10",
-                 braddr when "11";
+                 braddr when "11",
+                 x"FFFFFFFC" when others;
 
-end
+end structural;

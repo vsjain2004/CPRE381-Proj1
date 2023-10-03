@@ -38,16 +38,17 @@ architecture structural of CLA_32 is
     signal g32 : std_logic;
     signal p32 : std_logic;
     signal Y_xor : std_logic_vector(31 downto 0);
+    signal s_out : std_logic_vector(31 downto 0);
 begin
     Yxor : for i in 0 to 31 generate
-        Y_xor(i) <= Y xor AddSub;
+        Y_xor(i) <= Y(i) xor AddSub;
     end generate;
 
     CLA1 : CLA_8_ext
     port MAP(X => X(7 downto 0),
             Y => Y_xor(7 downto 0),
             Cin => AddSub,
-            S => S(7 downto 0),
+            S => s_out(7 downto 0),
             P => p8,
             G => g8,
             C => open);
@@ -58,7 +59,7 @@ begin
     port MAP(X => X(15 downto 8),
             Y => Y_xor(15 downto 8),
             Cin => AddSub,
-            S => S(15 downto 8),
+            S => s_out(15 downto 8),
             P => p16,
             G => g16,
             C => open);
@@ -69,7 +70,7 @@ begin
     port MAP(X => X(23 downto 16),
             Y => Y_xor(23 downto 16),
             Cin => AddSub,
-            S => S(23 downto 16),
+            S => s_out(23 downto 16),
             P => p24,
             G => g24,
             C => open);
@@ -80,16 +81,16 @@ begin
     port MAP(X => X(31 downto 24),
             Y => Y_xor(31 downto 24),
             Cin => AddSub,
-            S => S(31 downto 24),
+            S => s_out(31 downto 24),
             P => p32,
             G => g32,
             C => c31);
     
     c32 <= g32 or (p32 and g24) or (p32 and p24 and g16) or (p32 and p24 and p16 and g8) or (p32 and p24 and p16 and p8 and AddSub);
-
-    zero = not(S(31) or S(30) or S(29) or S(28) or S(27) or S(26) or S(25) or S(24) or S(23) or S(22) or S(21) or S(20) or S(19) or S(18) or S(17) or S(16) or S(15) or S(14) or S(13) or S(12) or S(11) or S(10) or S(9) or S(8) or S(7) or S(6) or S(5) or S(4) or S(3) or S(2) or S(1) or S(0));
-    negative = S(31);
-    overflow = c31 xor c32;
+    S <= s_out;
+    zero <= not(s_out(31) or s_out(30) or s_out(29) or s_out(28) or s_out(27) or s_out(26) or s_out(25) or s_out(24) or s_out(23) or s_out(22) or s_out(21) or s_out(20) or s_out(19) or s_out(18) or s_out(17) or s_out(16) or s_out(15) or s_out(14) or s_out(13) or s_out(12) or s_out(11) or s_out(10) or s_out(9) or s_out(8) or s_out(7) or s_out(6) or s_out(5) or s_out(4) or s_out(3) or s_out(2) or s_out(1) or s_out(0));
+    negative <= s_out(31);
+    overflow <= c31 xor c32;
     carry <= c32;
 
-end
+end structural;
