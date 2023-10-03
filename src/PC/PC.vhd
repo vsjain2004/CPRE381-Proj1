@@ -65,7 +65,7 @@ begin
     jumpaddr <= pc4_o(31 downto 28) & JAddr & "00";
 
     Add2 : CLA_32
-    port MAP(X => BAddr,
+    port MAP(X => (BAddr(29 downto 0) & "00"),
             Y => pc4_o,
             AddSub => '0',
             S => braddr,
