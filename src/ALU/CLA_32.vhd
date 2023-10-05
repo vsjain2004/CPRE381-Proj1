@@ -58,7 +58,7 @@ begin
     CLA2 : CLA_8_ext
     port MAP(X => X(15 downto 8),
             Y => Y_xor(15 downto 8),
-            Cin => AddSub,
+            Cin => c8,
             S => s_out(15 downto 8),
             P => p16,
             G => g16,
@@ -69,7 +69,7 @@ begin
     CLA3 : CLA_8_ext
     port MAP(X => X(23 downto 16),
             Y => Y_xor(23 downto 16),
-            Cin => AddSub,
+            Cin => c16,
             S => s_out(23 downto 16),
             P => p24,
             G => g24,
@@ -80,7 +80,7 @@ begin
     CLA4 : CLA_8_ext
     port MAP(X => X(31 downto 24),
             Y => Y_xor(31 downto 24),
-            Cin => AddSub,
+            Cin => c24,
             S => s_out(31 downto 24),
             P => p32,
             G => g32,
