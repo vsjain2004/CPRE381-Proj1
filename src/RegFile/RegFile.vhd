@@ -2,7 +2,7 @@ library IEEE;
 use IEEE.std_logic_1164.all;
 use IEEE.numeric_std.all;
 library work;
-use work.array_types.all;
+use work.MIPS_types.all;
 
 entity RegFile is
     port(data : in std_logic_vector(31 downto 0);
