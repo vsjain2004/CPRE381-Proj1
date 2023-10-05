@@ -123,4 +123,4 @@ begin
         output <= logical when '0',
                   arithmetic when '1',
                   x"00000000" when others;
-end
+end dataflow;
