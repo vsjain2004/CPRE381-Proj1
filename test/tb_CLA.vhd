@@ -6,7 +6,7 @@ use std.env.all;
 use std.textio.all;
 
 entity tb_CLA_32 is
-	generic(gCLK_HPER   : time := 10 ns);
+	generic(gCLK_HPER   : time := 50 ns);
 end tb_CLA_32;
 
 architecture test of tb_CLA_32 is
