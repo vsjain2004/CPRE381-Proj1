@@ -40,6 +40,15 @@ architecture structural of Control is
     signal op_dec : std_logic_vector(63 downto 0);
     signal func_dec : std_logic_vector(63 downto 0);
 begin
+
+    dec1: Decoder6t64
+    port MAP(input => opcode,
+            output => op_dec);
+    
+    dec2: Decoder6t64
+    port MAP(input => funct,
+            output => func_dec);
+
     with ((op_dec(0) and func_dec(9)) or op_dec(3)) select
         o_rd <= i_rd when '0',
                 "11111" when '1',
