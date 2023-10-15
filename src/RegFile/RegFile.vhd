@@ -64,7 +64,7 @@ begin
     
     with reset select
         sp_data <= data when '0',
-                   x"000003FF" when '1',
+                   x"7FFFFFFF" when '1',
                    x"00000000" when others;
     
     with reset select
@@ -72,14 +72,26 @@ begin
                  '1' when '1',
                  '0' when others;
     
-    Regs2 : for i in 30 to 31 generate
-        RegN : RegNBit
+    reg29 : RegNBit
+    port MAP(clk => clk,
+            reset => reset,
+            we => sp_we,
+            data => sp_data,
+            o_data => data_array(29));
+
+    reg30 : RegNBit
         port MAP(clk => clk,
                 reset => reset,
-                we => o_dec(i),
+                we => o_dec(30),
                 data => data,
-                o_data => data_array(i));
-    end generate Regs2;
+                o_data => data_array(30));
+
+    reg31 : RegNBit
+    port MAP(clk => clk,
+            reset => reset,
+            we => o_dec(31),
+            data => data,
+            o_data => data_array(31));
     
     muxrs : mux32t1_array
     port MAP(s => i_rs,

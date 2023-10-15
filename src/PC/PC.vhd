@@ -40,15 +40,21 @@ architecture structural of PC is
     signal pc4_o : std_logic_vector(31 downto 0);
     signal jumpaddr : std_logic_vector(31 downto 0);
     signal braddr : std_logic_vector(31 downto 0);
+    signal pc_in_pre : std_logic_vector(31 downto 0) := x"00400000";
     signal pc_in : std_logic_vector(31 downto 0);
     signal we : std_logic;
     signal X_2 : std_logic_vector(31 downto 0);
     signal pc_sel : std_logic_vector(1 downto 0);
 begin
+    with reset select
+        pc_in <= pc_in_pre when '0',
+                 x"00400000" when '1',
+                 x"00000000" when others;
+
     we <= not halt;
     progc : RegNBit
         port MAP(clk => clk,
-                reset => reset,
+                reset => '0',
                 we => we,
                 data => pc_in,
                 o_data => pc_o);
@@ -81,7 +87,7 @@ begin
 
     pc_sel <= pc_sel_1 & pc_sel_0;
     with pc_sel select
-        pc_in <= pc4_o when "00",
+        pc_in_pre <= pc4_o when "00",
                  linkr when "01",
                  jumpaddr when "10",
                  braddr when "11",

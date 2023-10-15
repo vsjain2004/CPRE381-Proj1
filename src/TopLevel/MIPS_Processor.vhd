@@ -256,6 +256,8 @@ begin
           o_rs => o_rs,
           o_rt => o_rt);
 
+  s_DMemData <= o_rt;
+
   with rs_sel select
     x <= o_rs when '0',
          x"00000000" when others;
@@ -267,7 +269,7 @@ begin
 
   with ivu_sel select
     shamt <= s_Inst(10 downto 6) when '0',
-             o_rt(4 downto 0) when '1',
+             o_rs(4 downto 0) when '1',
              "00000" when others;
 
   ALU0 : ALU

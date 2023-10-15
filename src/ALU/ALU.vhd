@@ -104,7 +104,7 @@ begin
                 '0' when others;
 
     shift : Shifter
-    port MAP(data => X,
+    port MAP(data => Y,
             shamt => shamt,
             shdir => shdir,
             shtype => astype,
