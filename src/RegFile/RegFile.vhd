@@ -38,8 +38,9 @@ architecture structural of RegFile is
     end component;
 
     signal o_dec : std_logic_vector(31 downto 0);
-
     signal data_array : reg_data_array;
+    signal sp_we : std_logic;
+    signal sp_data : std_logic_vector(31 downto 0);
 begin
     decoder: Decoder5t32
     port MAP(input => i_rd,
@@ -52,7 +53,26 @@ begin
             data => x"00000000",
             o_data => data_array(0));
 
-    Regs : for i in 1 to 31 generate
+    Regs : for i in 1 to 28 generate
+        RegN : RegNBit
+        port MAP(clk => clk,
+                reset => reset,
+                we => o_dec(i),
+                data => data,
+                o_data => data_array(i));
+    end generate Regs;
+    
+    with reset select
+        sp_data <= data when '0',
+                   x"000003FF" when '1',
+                   x"00000000" when others;
+    
+    with reset select
+        sp_we <= o_dec(29) when '0',
+                 '1' when '1',
+                 '0' when others;
+    
+    Regs2 : for i in 30 to 31 generate
         RegN : RegNBit
         port MAP(clk => clk,
                 reset => reset,
