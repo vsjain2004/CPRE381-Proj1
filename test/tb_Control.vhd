@@ -24,6 +24,7 @@ component Control is
         bgtz : out std_logic;
         imm_ext : out std_logic;
         sel_y : out std_logic;
+        rs_sel : out std_logic;
         ivu_sel : out std_logic;
         astype : out std_logic;
         shdir : out std_logic;
@@ -32,8 +33,8 @@ component Control is
         alu_sel_0 : out std_logic;
         dmem_we : out std_logic;
         reg_we : out std_logic;
-        ra_we : out std_logic;
-        reg_sel : out std_logic;
+        reg_sel_1 : out std_logic;
+        reg_sel_0 : out std_logic;
         rd_sel : out std_logic;
         pc_sel_1 : out std_logic;
         pc_sel_0 : out std_logic;
@@ -53,6 +54,7 @@ signal blez : std_logic;
 signal bgtz : std_logic;
 signal imm_ext : std_logic;
 signal sel_y : std_logic;
+signal rs_sel : std_logic;
 signal ivu_sel : std_logic;
 signal astype : std_logic;
 signal shdir : std_logic;
@@ -61,8 +63,8 @@ signal alu_sel_1 : std_logic;
 signal alu_sel_0 : std_logic;
 signal dmem_we : std_logic;
 signal reg_we : std_logic;
-signal ra_we : std_logic;
-signal reg_sel : std_logic;
+signal reg_sel_1 : std_logic;
+signal reg_sel_0 : std_logic;
 signal rd_sel : std_logic;
 signal pc_sel_1 : std_logic;
 signal pc_sel_0 : std_logic;
@@ -84,6 +86,7 @@ begin
             bgtz => bgtz,
             imm_ext => imm_ext,
             sel_y => sel_y,
+            rs_sel => rs_sel,
             ivu_sel => ivu_sel,
             astype => astype,
             shdir => shdir,
@@ -92,8 +95,8 @@ begin
             alu_sel_0 => alu_sel_0,
             dmem_we => dmem_we,
             reg_we => reg_we,
-            ra_we => ra_we,
-            reg_sel => reg_sel,
+            reg_sel_1 => reg_sel_1,
+            reg_sel_0 => reg_sel_0,
             rd_sel => rd_sel,
             pc_sel_1 => pc_sel_1,
             pc_sel_0 => pc_sel_0,
