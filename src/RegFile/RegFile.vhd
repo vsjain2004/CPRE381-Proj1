@@ -79,7 +79,7 @@ begin
                 we => o_dec(i),
                 data => data,
                 o_data => data_array(i));
-    end generate Regs;
+    end generate Regs2;
     
     muxrs : mux32t1_array
     port MAP(s => i_rs,
