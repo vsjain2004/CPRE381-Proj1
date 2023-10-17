@@ -64,7 +64,7 @@ begin
     
     with reset select
         sp_data <= data when '0',
-                   x"7FFFFFFF" when '1',
+                   x"7FFFEFFC" when '1',
                    x"00000000" when others;
     
     with reset select
@@ -74,7 +74,7 @@ begin
     
     reg29 : RegNBit
     port MAP(clk => clk,
-            reset => reset,
+            reset => '0',
             we => sp_we,
             data => sp_data,
             o_data => data_array(29));
