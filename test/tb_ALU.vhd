@@ -64,37 +64,49 @@ begin
 		
 		--Case 1: Add. Expect 0xF100000E
 		wait for gCLK_HPER*2;
+
+        --Case 2: Sub. Expect 0x0F000010
+        nAddSub <= '1';
+        wait for gCLK_HPER * 2;
 		
-		--Case 2: Shift. Expect 0x000000F0
+		--Case 3: sll. Expect 0x0FFFFFF0
+        nAddSub <= '0';
 		alu_sel_0 <= '1';
 		wait for gCLK_HPER*2;
+
+        --Case 4: srl. Expect 0x0F0FFFFF
+        shdir <= '1';
+        wait for gCLK_HPER*2;
+
+        --Case 5: sra. Expect 0xFF0FFFFF
+        nAddSub <= '1';
+        wait for gCLK_HPER*2;
 		
-		--Case 3: lui. Expect FFFF0000
+		--Case 6: lui. Expect 0xFFFF0000
 		alu_sel_0 <= '0';
         alu_sel_1 <= '1';
 		wait for gCLK_HPER*2;
 
-        --Case 4: nor. Expect 0F000000
+        --Case 7: nor. Expect 0x0F000000
         alu_sel_0 <= '1';
 		wait for gCLK_HPER*2;
 
-		--Case 5: or. Expect F0FFFFFF
+		--Case 8: or. Expect 0xF0FFFFFF
 		alu_sel_0 <= '0';
         alu_sel_1 <= '0';
         alu_sel_2 <= '1';
 		wait for gCLK_HPER*2;
 
-        --Case 6: xor. expect F0FFFFF0
+        --Case 9: xor. expect 0xF0FFFFF0
         alu_sel_0 <= '1';
         wait for gCLK_HPER*2;
 
-        --Case 3: and. Expect 0000000F
+        --Case 10: and. Expect 0x0000000F
         alu_sel_0 <= '0';
         alu_sel_1 <= '1';
         wait for gCLK_HPER*2;
 
-        --Case 4: sltu. Expect 00000001
-        nAddSub <= '1';
+        --Case 11: slt. Expect 0x00000000
         alu_sel_0 <= '1';
         wait;
 	end process;
